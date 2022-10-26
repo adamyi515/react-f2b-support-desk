@@ -1,0 +1,11 @@
+{
+  "name": "react-f2b-supportdesk",
+  "version": "1.0.0",
+  "description": "Support Ticket app using MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "author": "Adam Yi",
+  "license": "ISC"
+}
