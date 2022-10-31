@@ -8,7 +8,7 @@ const { errorMiddleware } = require('./middlewares/errorMiddleware');
 
 
 // DB CONNECTION
-connectDB()
+connectDB();
 
 
 // Middleware setup
