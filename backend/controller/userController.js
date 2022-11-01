@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
@@ -6,7 +7,7 @@ const jwt = require('jsonwebtoken');
 // @desc Register user
 // @route /api/users
 // @access Public
-const registerUser = async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
     
     // Validation
@@ -49,12 +50,12 @@ const registerUser = async (req, res) => {
        
     }
 
-}
+})
 
 // @desc Login user
 // @route /api/user/login
 // @access Public
-const loginUser = async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const foundUser = await User.findOne({ email });
@@ -74,16 +75,16 @@ const loginUser = async (req, res) => {
         })
     }
 
-}
+})
 
-const getMe = async (req, res) => {
+const getMe = asyncHandler(async (req, res) => {
     const user = {
         _id: req.user.id,
         email: req.user.email,
         name: req.user.name
     }
     res.status(200).json(user);
-}
+})
 
 
 const generateToken = (id) => {
