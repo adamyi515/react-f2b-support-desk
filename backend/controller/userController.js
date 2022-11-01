@@ -77,7 +77,12 @@ const loginUser = async (req, res) => {
 }
 
 const getMe = async (req, res) => {
-    res.send(req.user);
+    const user = {
+        _id: req.user.id,
+        email: req.user.email,
+        name: req.user.name
+    }
+    res.status(200).json(user);
 }
 
 
