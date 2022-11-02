@@ -4,17 +4,13 @@ const API_URL = 'http://localhost:5000/api/users';
 
 // Register method
 const register = async (userData) => {
-    // const response = await axios.post(API_URL, userData );
-    const response = await axios({
-        method: 'POST',
-        url: API_URL,
-        // headers: {
-		// 	'Access-Control-Allow-Origin': '*',
-		// },
-		// withCredentials: false,
-        data: userData
-    });
-
+    const response = await axios.post(API_URL, userData);
+    // const response = await axios({
+    //     method: 'POST',
+    //     url: API_URL,
+    //     data: userData
+    // });
+    
     if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data))
     }

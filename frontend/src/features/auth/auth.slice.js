@@ -10,7 +10,6 @@ const initialState = {
 }   
 
 // API METHODS CALLING TO OUR BACKEND. /////////////////////////////////////////////
-
 // Register user to db. register() returns data from db so that we can store that data to our state.
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
     try {
@@ -55,7 +54,8 @@ export const authSlice = createSlice({
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
-                state.message = action.payload
+                state.message = action.payload;
+                state.user = null;
             })
     }
 });
