@@ -8,10 +8,6 @@ const register = async (userData) => {
     const response = await axios({
         method: 'POST',
         url: API_URL,
-        // headers: {
-		// 	'Access-Control-Allow-Origin': '*',
-		// },
-		// withCredentials: false,
         data: userData
     });
 
@@ -22,9 +18,29 @@ const register = async (userData) => {
     return response.data;
 }
 
+// Login user
+const login = async (userData) => {
+    const response = await axios({
+        method: 'POST',
+        url: `${API_URL}/login`,
+        data: userData
+    });
+
+    if(response.data){
+        localStorage.setItem('user', JSON.stringify(response.data))
+    }
+
+    return response.data;
+}
+
+// Logout user
+const logout = async () => localStorage.removeItem('user');
+
 
 const authService = {
-    register
+    register,
+    login,
+    logout
 } 
 
 export default authService;

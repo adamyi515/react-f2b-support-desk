@@ -12,17 +12,15 @@ const registerUser = asyncHandler(async (req, res) => {
     
     // Validation
     if(!name || !email || !password){
-        res.status(400).json({
-            error: 'All parameters must be entered.'
-        })
+        res.status(400);
+        throw new Error('All parameters must be entered');
     }
 
     // Check if user exist, if so, then return status 400
     const userExist = await User.findOne({ email });
     if(userExist){
-        res.status(400).json({
-            error: 'User already exist.'
-        })
+        res.status(400);
+        throw new Error('User already exist');
         
     }
 
@@ -42,11 +40,10 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             token: generateToken(user._id)
-        })
+        });
     } else {
-        res.status(400).json({
-            error: 'Invalid User Data'
-        })
+        res.status(400);
+        throw new Error('Invalid user data');
        
     }
 
@@ -68,11 +65,10 @@ const loginUser = asyncHandler(async (req, res) => {
             name: foundUser.name,
             email: foundUser.email,
             token: generateToken(foundUser._id)
-        })
+        });
     } else {
-        res.status(401).json({
-            message: 'ERROR: Invalid Credentials'
-        })
+        res.status(401);
+        throw new Error('Invalid credentials');
     }
 
 })
@@ -82,7 +78,7 @@ const getMe = asyncHandler(async (req, res) => {
         _id: req.user.id,
         email: req.user.email,
         name: req.user.name
-    }
+    };
     res.status(200).json(user);
 })
 
@@ -90,7 +86,7 @@ const getMe = asyncHandler(async (req, res) => {
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
-    })
+    });
 }
 
 module.exports = {
