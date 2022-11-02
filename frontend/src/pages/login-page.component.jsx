@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../features/auth/auth.slice';
+import { login, reset } from '../features/auth/auth.slice';
 
 const LoginPage = () =>{
 
@@ -15,6 +16,7 @@ const LoginPage = () =>{
     });
 
     const { email, password } = formData;
+    const navigate = useNavigate();
 
     // REDUX
     const dispatch = useDispatch();
@@ -25,6 +27,21 @@ const LoginPage = () =>{
         isLoading,
         message
     } = useSelector((state) => state.auth);
+
+    ///////////////////////////////////////////////////////////////////
+    // Lifecycle method
+    useEffect(() => {
+        if(isError){
+            toast.error(message)
+        }
+
+        if(isSuccess || user) {
+            navigate('/');
+        }
+
+        dispatch(reset());
+
+    }, [isError, isSuccess, user, message, navigate, dispatch])
 
 
     // EVENT HANDLERS //////////////////////////////////////////
@@ -39,17 +56,19 @@ const LoginPage = () =>{
 
     const handleSubmit = ev => {
         ev.preventDefault();
-
         const userData = {
             email,
             password
         }
-
         dispatch(login(userData));
-
     }
 
- 
+    if(isLoading){
+        return(
+            <h1>Loading....</h1>
+        )
+    }
+
     return(
         <>
             <section className='heading'>
