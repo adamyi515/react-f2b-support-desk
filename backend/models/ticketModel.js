@@ -1,27 +1,29 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please add a name']
-    },
-    email: {
-        type: String,
-        required:[true, 'Please add an email'],
-        unique: true
-    },
-    password: {
-        type: String,
-        required: [true, 'Please add a password']
-    },
-    isAdmin: {
-        type: Boolean,
+const ticketSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
         required: true,
-        default: false
+        ref: 'User'
+    },
+    product: {
+        type: String,
+        required:[true, 'Please add an product'],
+        enum: ['iPhone', 'Macbook pro', 'iMac', 'iPad']
+    },
+    description: {
+        type: String,
+        required: [true, 'Please enter a description of issue.']
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: ['new', 'open', 'closed'],
+        default: 'new'
     }
 },
 {
     timestamps: true
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Ticket', ticketSchema);

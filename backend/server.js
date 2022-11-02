@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 
 // Setting up routes.
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/tickets', require('./routes/ticketRoutes'));
 app.use(errorMiddleware);
 
 
