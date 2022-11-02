@@ -13,23 +13,16 @@ const registerUser = asyncHandler(async (req, res) => {
     // Validation
     if(!name || !email || !password){
         res.status(400);
-<<<<<<< HEAD
-        throw new error('must enter all data');
-=======
+
         throw new Error('All parameters must be entered');
->>>>>>> 78c5a6531404dac91824dd519f55386a9ac72d1d
     }
 
     // Check if user exist, if so, then return status 400
     const userExist = await User.findOne({ email });
     if(userExist){
         res.status(400);
-<<<<<<< HEAD
-        throw new error('User already exist');
-=======
         throw new Error('User already exist');
         
->>>>>>> 78c5a6531404dac91824dd519f55386a9ac72d1d
     }
 
     // If user does not exist, then hash the password and create new user in DB.
